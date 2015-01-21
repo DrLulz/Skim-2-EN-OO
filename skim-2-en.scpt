@@ -27,7 +27,7 @@ property md_line_feed : (ASCII character 32) & (ASCII character 32) & (ASCII cha
 set {extract_images, image_res, word_list} to {false, {}, {}}
 set export_options to {"Titlecase Levels 1 - 3", "Text Correction", "Find Spaces", "Extract Images", "Most Used Words"}
 
-set export_options to choose from list items 2 thru -1 in export_options default items {"Extract Images"} with prompt ("Options: Hold " & character id 8984 & " for Multiple") cancel button name "No Options" with multiple selections allowed and empty selection allowed
+set export_options to choose from list export_options default items {"Extract Images"} with prompt ("Options: Hold " & character id 8984 & " for Multiple") cancel button name "No Options" with multiple selections allowed and empty selection allowed
 
 --------------------------------------------------------------
 -- Ignore Words When Finding Most Frequent Words of PDF
