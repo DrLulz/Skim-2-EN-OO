@@ -311,7 +311,6 @@ end if
 
 if program is false then
 	
-	set pic_cache to {}
 	set annotations to line_feed & line_feed & md_line_feed & line_feed & line_feed
 	
 	tell application "Skim"
@@ -335,7 +334,7 @@ if program is false then
 				set annotations to my annotations & (my en_html(rgba, fav_colors, en_bullet, note_text, this_url, page_num, export_options))
 			else if (type_note = box_note) and (extract_images = true) then
 				my write_temp(program, _data, page_index, image_res)
-				set end of pic_cache to my en_import(page_index)
+				set annotations to my annotations & (my en_import(page_index))
 			end if
 			
 		end repeat
@@ -369,10 +368,7 @@ if program is false then
 		end try
 		
 		
-		set en_note to create note title pdf_name with html final_text notebook "Inbox"
-		repeat with pic in pic_cache
-			tell en_note to append attachment file pic
-		end repeat
+		set en_note to create note title pdf_name with html final_text notebook my en_inbox()
 		open note window with en_note
 		try
 			do shell script "rm -r " & quoted form of (POSIX path of (path to temporary items from user domain) & "pic_temp_folder")
@@ -703,6 +699,11 @@ end write_temp
 -- Change font_ (family, color, size, style, weight)
 -- Idea from gist.github.com/smargh/ea15a72df99debae411c
 --------------------------------------------------------------
+
+on en_inbox()
+	tell application "Evernote" to return name of (every notebook whose default is true)
+end en_inbox
+
 on en_html(rgba, fav_colors, _title, note_text, hyperlink, page_num, options)
 	
 	set {fc1, fc2, fc3, fc4, fc5, fc6} to fav_colors
@@ -842,8 +843,9 @@ end tag_check
 --------------------------------------------------------------
 on en_import(page_index)
 	
-	set target_folder to (path to temporary items from user domain as string) & "pic_temp_folder:box_page_"
-	set conversion_hfs to (target_folder & page_index & ".png") as text
+	set pic_posix to posix path of (path to temporary items from user domain as string) & "pic_temp_folder/box_page_" & page_index & ".png"
+	set image_url to "file:///" & pic_posix
+	set image_html to "<div><img src=\"" & image_url & "\" style=\"\"/></div>"
 	
 end en_import
 
