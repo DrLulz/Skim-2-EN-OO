@@ -4,6 +4,11 @@ import string
 # Build a cost dictionary, assuming Zipf's law and cost = -math.log(probability).
 words = open("/Desktop/wordlist_hz_456631.txt").read().split()
 wordcost = dict((k, log((i+1)*log(len(words)))) for i,k in enumerate(words))
+
+nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+for n in nums:
+    wordcost[n] = log(2)
+    
 maxword = max(len(x) for x in words)
 table = string.maketrans("","")
 l = "".join("where,canifindthe beer".split()).lower()
