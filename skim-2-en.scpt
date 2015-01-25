@@ -200,13 +200,13 @@ end path2url
 --------------------------------------------------------------
 -- Convert Levels 1-3 to Titlecase
 --------------------------------------------------------------
-on titlecase(txt, option)
+on titlecap(txt, option)
 	if option does not contain "Titlecase Levels 1 - 3" then
 		return txt
 	else
 		return do shell script "python -c \"import sys; print unicode(sys.argv[1], 'utf8').title().encode('utf8')\" " & quoted form of txt
 	end if
-end titlecase
+end titlecap
 
 
 --------------------------------------------------------------
@@ -384,7 +384,7 @@ on en_html(rgba, fav_colors, _title, note_text, hyperlink, page_num, options)
 		
 		set top to "<br></br><p style=\"font-size: 0px;\"><hr/><p style=\"font-size: 10px;\"></p>"
 		set pre to "<p style=\"font-size: 14px;\">" & "<a href=\"" & hyperlink & "\" style=\"text-decoration: none\">" & _title & "</a>"
-		set body to "<span style=\"color: " & font_color & "; font-family: " & font_family & "; font-size: " & font_size & "; font-style: " & font_style & "; font-variant: normal; font-weight: " & font_weight & "; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(254, 254, 254); float: none;\">" & my titlecase(note_text, options) & "</span>"
+		set body to "<span style=\"color: " & font_color & "; font-family: " & font_family & "; font-size: " & font_size & "; font-style: " & font_style & "; font-variant: normal; font-weight: " & font_weight & "; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(254, 254, 254); float: none;\">" & my titlecap(note_text, options) & "</span>"
 		set page to "" & "<font size=\"1\" color=\"#4C4C4C\">(" & page_num & ")</font></p>"
 		return top & space & pre & space & body & space & page & line_feed & line_feed
 		
@@ -392,14 +392,14 @@ on en_html(rgba, fav_colors, _title, note_text, hyperlink, page_num, options)
 	else if rgba is equal to fc2 then
 		
 		set pre to "<p style=\"font-size: 14px;\">" & "<a href=\"" & hyperlink & "\" style=\"text-decoration: none\">" & _title & "</a>"
-		set body to "<span style=\"color: " & font_color & "; font-family: " & font_family & "; font-size: " & font_size & "; font-style: " & font_style & "; font-variant: normal; font-weight: " & font_weight & "; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(254, 254, 254); float: none;\">" & my titlecase(note_text, options) & "</span>"
+		set body to "<span style=\"color: " & font_color & "; font-family: " & font_family & "; font-size: " & font_size & "; font-style: " & font_style & "; font-variant: normal; font-weight: " & font_weight & "; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(254, 254, 254); float: none;\">" & my titlecap(note_text, options) & "</span>"
 		set page to "" & "<font size=\"1\" color=\"#4C4C4C\">(" & page_num & ")</font></p>"
 		return pre & space & body & space & page & line_feed & line_feed
 		
 		
 	else if rgba is equal to fc3 then
 		set pre to "<p style=\"font-size: 14px;\">" & "<a href=\"" & hyperlink & "\" style=\"text-decoration: none\">" & _title & "</a>"
-		set body to "<span style=\"color: " & font_color & "; font-family: " & font_family & "; font-size: " & font_size & "; font-style: " & font_style & "; font-variant: normal; font-weight: " & font_weight & "; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(254, 254, 254); float: none;\">" & my titlecase(note_text, options) & "</span>"
+		set body to "<span style=\"color: " & font_color & "; font-family: " & font_family & "; font-size: " & font_size & "; font-style: " & font_style & "; font-variant: normal; font-weight: " & font_weight & "; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(254, 254, 254); float: none;\">" & my titlecap(note_text, options) & "</span>"
 		set page to "" & "<font size=\"1\" color=\"#4C4C4C\">(" & page_num & ")</font></p>"
 		return pre & space & body & space & page & line_feed & line_feed
 		

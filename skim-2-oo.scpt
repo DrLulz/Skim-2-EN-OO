@@ -21,10 +21,6 @@
 -- Extract Images: Finds boundries of Skims 'Box Note' and Creates PNG on Export (User Can Define Resolution)
 --------------------------------------------------------------
 
-property line_feed : (ASCII character 10)
-property md_line_feed : (ASCII character 32) & (ASCII character 32) & (ASCII character 10)
-
-
 set {template, template_name, extract_images, image_res, word_list} to {false, {}, false, {}, {}}
 set export_options to {"One Color", "Titlecase Levels 1 - 3", "Text Correction", "Find Spaces", "Extract Images", "Most Used Words"}
 set {template, template_name, extract_images, image_res, export_options, word_list} to ¬
@@ -220,16 +216,16 @@ tell application "Skim"
 				
 				if rgba is fc1 then
 					
-					set head_one to make new row with properties {topic:my titlecase(note_text, export_options), note:note_url} at end of rows of doc
+					set head_one to make new row with properties {topic:my titlecap(note_text, export_options), note:note_url} at end of rows of doc
 					add style_one to named styles of style of head_one
 					
 					
 				else if rgba is fc2 then
 					
 					try
-						set head_two to make new row with properties {topic:my titlecase(note_text, export_options), note:note_url} at end of last child of doc
+						set head_two to make new row with properties {topic:my titlecap(note_text, export_options), note:note_url} at end of last child of doc
 					on error
-						set head_two to make new row with properties {topic:my titlecase(note_text, export_options), note:note_url} at end of rows of doc
+						set head_two to make new row with properties {topic:my titlecap(note_text, export_options), note:note_url} at end of rows of doc
 					end try
 					add style_two to named styles of style of head_two
 					
@@ -238,11 +234,11 @@ tell application "Skim"
 					
 					set head_three to {}
 					if previous_rows_style is in head_mark then
-						set head_three to make new row with properties {topic:my titlecase(note_text, export_options), note:note_url} at end of last row's children of doc
+						set head_three to make new row with properties {topic:my titlecap(note_text, export_options), note:note_url} at end of last row's children of doc
 					else if level of parent of last row of doc ≤ 2 then
-						set head_three to make new row with properties {topic:my titlecase(note_text, export_options), note:note_url} at end of rows of parent of row_last
+						set head_three to make new row with properties {topic:my titlecap(note_text, export_options), note:note_url} at end of rows of parent of row_last
 					else
-						set head_three to make new row with properties {topic:my titlecase(note_text, export_options), note:note_url} at end of parent of last row's parent of doc
+						set head_three to make new row with properties {topic:my titlecap(note_text, export_options), note:note_url} at end of parent of last row's parent of doc
 					end if
 					add style_three to named styles of style of head_three
 					
@@ -316,6 +312,13 @@ end try
 --------------------------------------------------------------
 on get_options(template, template_name, extract_images, image_res, export_options, word_list)
 	
+	tell application "Skim"
+		if not (exists front document) then 
+			activate
+			display dialog ("No Document is Open") with icon path to resource "Skim.icns" in bundle (path to application "Skim")
+			return
+		end if
+	end tell
 	
 	--OMNIOUTLINER
 	
@@ -396,13 +399,13 @@ end path2url
 --------------------------------------------------------------
 -- Convert Levels 1-3 to Titlecase
 --------------------------------------------------------------
-on titlecase(txt, option)
+on titlecap(txt, option)
 	if option does not contain "Titlecase Levels 1 - 3" then
 		return txt
 	else
 		return do shell script "python -c \"import sys; print unicode(sys.argv[1], 'utf8').title().encode('utf8')\" " & quoted form of txt
 	end if
-end titlecase
+end titlecap
 
 
 --------------------------------------------------------------
