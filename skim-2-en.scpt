@@ -43,7 +43,13 @@ set ignore_words to {"and", "the", "a", "for", "in", "on", "if", "which", "at", 
 
 tell application "Skim"
 	
-	set all_notes to every note of front document
+	try
+		set all_notes to every note of front document
+	on error
+		activate
+		display dialog "No Skim Document is Open"
+	end try
+	
 	set doc_name to (name of front document)
 	set pdf_name to text 1 thru ((offset of "." in doc_name) - 1) of doc_name
 	set posix_path to (path of front document)
@@ -264,6 +270,10 @@ wordcost = dict((k, log((i+1)*log(len(words)))) for i,k in enumerate(words))
 maxword = max(len(x) for x in words)
 table = string.maketrans(\"\",\"\")
 l = \"\".join(\"" & note_text & quoted form of "\".split()).lower()
+
+nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+for n in nums:
+    wordcost[n] = log(2)
 
 def infer_spaces(s):
 
